@@ -13,7 +13,7 @@
                     :class="[d.isToday ? 'bg-gray-400 rounded-3xl' : '',
                     selectedDays.includes(d.isoDate) ? 'bg-green-300 rounded-3xl shadow-lg shadow-gray-500' : '',
                      d.disabled || !d.isOpen ? 'bg-gray-300' : '']"
-                    class="w-12 h-12 items-center justify-center text-sm font-semibold">
+                    class="w-12 mx-auto h-12 items-center justify-center text-sm font-semibold">
                     <span class="">{{ d.date }}</span>
                     <div class="" v-for="e in d.events" :key="e">
                         <span class="text-sm" :class="[e.hasDiscount ? 'text-green-500' : 'text-red-500']"
