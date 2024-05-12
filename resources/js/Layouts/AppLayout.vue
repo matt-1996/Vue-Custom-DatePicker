@@ -28,7 +28,7 @@ const logout = () => {
 </script>
 
 <template>
-    <div>
+    <div dir="rtl">
         <Head :title="title" />
 
         <Banner />
