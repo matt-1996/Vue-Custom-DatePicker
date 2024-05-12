@@ -4,16 +4,15 @@
             <div class="mx-auto" v-for="(d, index) in days" :key="d">
                 <span class="text-gray-500 font-semibold text-center">{{ days[index] }}</span>
             </div>
-
-
-
             <template v-for="(d, index) in dates" :key="d">
                 <template v-if="index == 0">
                     <div v-for="i in d.day" :key="i"></div>
                 </template>
 
                 <button :disabled="d.disabled || !d.isOpen" @click="addOrRemoveSelectedDays(d.isoDate)"
-                    :class="[d.isToday ? 'bg-gray-400 rounded-3xl' : '', selectedDays.includes(d.isoDate) ? 'bg-green-300 shadow-lg shadow-green-700' : '', d.disabled || !d.isOpen ? 'bg-gray-300' : '']"
+                    :class="[d.isToday ? 'bg-gray-400 rounded-3xl' : '',
+                    selectedDays.includes(d.isoDate) ? 'bg-green-300 rounded-3xl shadow-lg shadow-gray-500' : '',
+                     d.disabled || !d.isOpen ? 'bg-gray-300' : '']"
                     class="w-12 h-12 items-center justify-center text-sm font-semibold">
                     <span class="">{{ d.date }}</span>
                     <div class="" v-for="e in d.events" :key="e">
@@ -83,14 +82,12 @@ console.log(dateProps.selectedValues)
 const dates = ref([])
 const date = ref()
 const dateEmit = defineEmits('selected', v)
-// console.log(daysInMonth.value)
 
 watch(() => dateProps.selectedValues, (v) => {
     generateDays(v.month, v.year)
     console.log(v)
 }, { deep: true })
 
-console.log(dateProps)
 
 function generateDays(month = moment(today[0]).month() + 1, year = moment(today[0]).year()) {
     if (month > 12) [
@@ -109,7 +106,10 @@ function generateDays(month = moment(today[0]).month() + 1, year = moment(today[
 
         var disabled = false;
 
-        if (isoDateArray[2] < parseInt(todayArray[1]) || isoDateArray[1] < parseInt(todayArray[0].at(1))) {
+        const isSameMonth = isoDateArray[1] == todayArray[0].at(1)
+        console.log(parseInt(isoDateArray[1]) , parseInt(todayArray[0].at(1)))
+
+        if (isSameMonth && isoDateArray[2] < parseInt(todayArray[1]) || isoDateArray[1] < parseInt(todayArray[0].at(1))) {
             disabled = true
         }
 
@@ -121,13 +121,13 @@ function generateDays(month = moment(today[0]).month() + 1, year = moment(today[
             events: events.value,
             isToday: isoDate == todayFormated,
             disabled: disabled,
-            isOpen: Math.random() < 0.8
+            isOpen: true
         })
 
-        console.log(isoDateArray[2] < todayArray[1])
+        // console.log(isoDateArray[2] < todayArray[1])
     }
 
-    console.log(dates.value)
+    // console.log(dates.value)
 }
 
 function generateDaysWhenUpdated(month, year) {
