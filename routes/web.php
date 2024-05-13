@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Room\RoomController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,7 +19,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard/',[RoomController::class , 'index'])->name('dashboard');
+    Route::get('room/{id}' , [RoomController::class , 'show'])->name('room.show');
+    Route::put('room/{id}', [RoomController::class , 'update'])->name('room.update');
 });
