@@ -10,17 +10,14 @@
 
 <script setup>
 import dayjs from 'dayjs'
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import moment from 'moment';
-import fa from "moment/src/locale/fa";
 
 const d = new Date()
 const today = new Intl.DateTimeFormat('en-US-u-ca-persian', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(d).split(/(\s+)/)
 var m = moment(today[0]).month() + 1;
 const month = ref(m)
-console.log(month.value)
 
-const cMonth = computed(() => moment(today[0]).month(month.value).format('MMMM'))
 
 function getMonthInShamsi(month) {
     var shamsiMonth = '';
@@ -71,18 +68,15 @@ const monthEmit = defineEmits('selected')
 function addMonth(y) {
     month.value += y;
     monthEmit('selected', month.value);
-    console.log(month.value)
 }
 
 function minusMonth(y) {
     if (y == 0) {
         month.value = 1
         monthEmit('selected', month.value)
-        console.log(month.value)
     } else {
         month.value -= y
         monthEmit('selected', month.value)
-        console.log(month.value)
     }
 
 }
