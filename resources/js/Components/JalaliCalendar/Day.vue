@@ -9,21 +9,26 @@
                     <div v-for="i in d.day" :key="i"></div>
                 </template>
 
-                <button :disabled="d.disabled || !d.isOpen" @click="addOrRemoveSelectedDays(d.isoDate)"
-                    :class="[d.isToday ? 'bg-gray-400 rounded-3xl' : '',
-                    selectedDays.includes(d.isoDate) ? 'bg-green-300 rounded-3xl shadow-lg shadow-gray-500' : '',
-                     d.disabled || !d.isOpen ? 'bg-gray-300' : '']"
+                <button :disabled="d.disabled || !d.isOpen || d.isReserved" @click="addOrRemoveSelectedDays(d.isoDate)" :class="[d.isToday ? 'ring-2' : '',
+                selectedDays.includes(d.isoDate) ? 'bg-green-300 shadow-lg shadow-gray-500' : '',
+                d.disabled || !d.isOpen || d.isReserved? 'bg-gray-300' : '']"
                     class="w-12 mx-auto h-12 items-center justify-center text-sm font-semibold">
+
                     <span class="">{{ d.date }}</span>
-                    <div class="" v-for="e in d.events" :key="e">
-                        <span class="text-sm" :class="[e.hasDiscount ? 'text-green-500' : 'text-red-500']"
-                            v-if="d.isoDate == e.date">{{
-                            e.message}}</span>
+
+                    <div>
+                        <span class="text-sm" :class="[d.todayEvent.has_discount ? 'text-green-500' : 'text-red-500']">
+                            {{ d.todayEvent.price || dateProps.defaultPrice}}
+                        </span>
                     </div>
                 </button>
-
             </template>
 
+        </div>
+
+        <div class="flex flex-row gap-5 py-4">
+            <button @click="OpenDays(d)" class="bg-green-500 p-2 rounded-lg text-gray-50 flex-1">باز کردن تقویم</button>
+            <button @click="closeDays(d)" class="flex-1 ring-1 rounded-lg ring-red-500">مسدود کردن تقویم</button>
         </div>
     </div>
 
@@ -32,13 +37,18 @@
 <script setup>
 import { watch, onMounted, ref } from 'vue';
 import moment from "moment-jalaali";
+import axios from 'axios';
 
 const dateProps = defineProps({
     selectedValues: Object,
-    selectedDate: Number
+    selectedDate: Number,
+    room: Object,
+    defaultPrice: Number
 })
 
-const selectedDays = ref(['1403/2/25'])
+// console.log(dateProps.room.events)
+
+const selectedDays = ref([])
 const days = [
     'ش',
     'ی',
@@ -49,17 +59,19 @@ const days = [
     'ج'
 ]
 
-const events = ref([{
-    date: '1403/2/20',
-    message: '120',
-    hasDiscount: true
-},
-{
-    date: '1403/2/25',
-    message: '140',
-    hasDiscount: false
+const events = ref([])
+
+events.value = dateProps.room.events
+
+console.log(events.value)
+
+function OpenDays(){
+    if(selectedDays.value.length > 0){
+        console.log('y')
+    }else{
+        console.log('no')
+    }
 }
-])
 
 function addOrRemoveSelectedDays(date) {
     if (!selectedDays.value.includes(date)) {
@@ -85,15 +97,15 @@ const dateEmit = defineEmits('selected', v)
 
 watch(() => dateProps.selectedValues, (v) => {
     generateDays(v.month, v.year)
-    console.log(v)
+    // console.log(v)
 }, { deep: true })
 
 
 function generateDays(month = moment(today[0]).month() + 1, year = moment(today[0]).year()) {
-    if (month > 12) [
+    if (month > 12) {
         month = 12
-    ]
-    console.log(month, year)
+    }
+
     dates.value = []
     const daysInMonth = moment.jDaysInMonth(year, month)
     const todayArray = today[0].split('/')
@@ -107,12 +119,11 @@ function generateDays(month = moment(today[0]).month() + 1, year = moment(today[
         var disabled = false;
 
         const isSameMonth = isoDateArray[1] == todayArray[0].at(1)
-        console.log(parseInt(isoDateArray[1]) , parseInt(todayArray[0].at(1)))
 
-        if (isSameMonth && isoDateArray[2] < parseInt(todayArray[1]) || isoDateArray[1] < parseInt(todayArray[0].at(1))) {
+        if (isSameMonth && isoDateArray[2] < parseInt(todayArray[1]) || isoDateArray[1] < parseInt(todayArray[0].at(1)) && isoDateArray[0] == todayArray[2]) {
             disabled = true
         }
-
+        // const isOpen = events.value.find(e => e.date == '1403/2/20')
         dates.value.push({
             date: i,
             day: moment(`${year}/${month}/${i}`).day(),
@@ -121,27 +132,17 @@ function generateDays(month = moment(today[0]).month() + 1, year = moment(today[
             events: events.value,
             isToday: isoDate == todayFormated,
             disabled: disabled,
-            isOpen: true
+            isOpen: events.value.find(e => e.date == isoDate)?.is_open ?? true,
+            todayEvent: events.value.find(e => e.date == isoDate) ?? {},
+            isReserved: events.value.find(e => e.date == isoDate)?.is_reserved ?? false,
+            event_id: events.value.find(e => e.date == isoDate)?.id
         })
-
-        // console.log(isoDateArray[2] < todayArray[1])
-    }
-
-    // console.log(dates.value)
-}
-
-function generateDaysWhenUpdated(month, year) {
-    console.log(month, year)
-    dates.value = []
-    const daysInMonth = moment.jDaysInMonth(year, month)
-    for (let i = 1; i <= daysInMonth; i++) {
-        dates.value.push({
-            date: i,
-            day: moment(`${year}/${month}/${i}`).day()
-        })
-
+        // console.log(events.value.find(e => e.date == isoDate)?.isOpen)
+        // console.log(events.value = dateProps.room.events))
+        // console.log(events.value = dateProps.room.events))
     }
 }
+
 onMounted(() => {
     generateDays()
 })
