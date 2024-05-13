@@ -4,7 +4,11 @@
 
             <Year @selected="changeYear" />
             <Month @selected="changeMonth" />
-            <Day @selected="changeDate" :selectedValues="selectedValues" :selectedDate="selectedDate"  />
+            <Day @selected="changeDate" :selectedValues="selectedValues"
+                 :room="props.room"
+                 :defaultPrice="props.defaultPrice"
+                 :selectedDate="selectedDate"
+            />
         </div>
         <div v-if="selectedDateValue" class="w-1/2">
             <!-- {{ selectedDateValue }} -->
@@ -28,6 +32,9 @@ const selectedValues = reactive({
     month:moment(today[0]).month() ,
     year:moment(today[0]).year()
 })
+
+const props = defineProps({room: Object, defaultPrice: Number})
+
 
 function changeYear(v){
     selectedValues.month = v
