@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum RoomEnum
+enum RoomPriceEnum: int
 {
-    CASE PRICE = 1200;
+    CASE PRICE = 1350;
 }
