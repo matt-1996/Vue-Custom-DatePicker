@@ -9,7 +9,6 @@
 </template>
 
 <script setup>
-import dayjs from 'dayjs'
 import { ref } from 'vue';
 import moment from 'moment';
 
