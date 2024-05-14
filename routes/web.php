@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Event\EventController;
 use App\Http\Controllers\Api\V1\Room\RoomController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -21,5 +22,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard/',[RoomController::class , 'index'])->name('dashboard');
     Route::get('room/{id}' , [RoomController::class , 'show'])->name('room.show');
-    Route::put('room/{id}', [RoomController::class , 'update'])->name('room.update');
+    Route::post('event', [EventController::class , 'update'])->name('event.update');
+    Route::post('reserve/room/{id}', [EventController::class , 'reserve'])->name('room.reserve');
+    Route::post('room/update-price', [EventController::class , 'updatePrice'])->name('event.update.price');
 });
