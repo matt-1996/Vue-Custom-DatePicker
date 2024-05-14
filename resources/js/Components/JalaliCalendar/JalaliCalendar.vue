@@ -4,14 +4,14 @@
 
             <Year @selected="changeYear" />
             <Month @selected="changeMonth" />
-            <Day @selected="changeDate" :selectedValues="selectedValues"
+            <Day range @selected="changeDate" :selectedValues="selectedValues"
                  :room="props.room"
                  :defaultPrice="props.defaultPrice"
                  :selectedDate="selectedDate"
             />
         </div>
-        <div v-if="selectedDateValue" class="w-1/2">
-            <!-- {{ selectedDateValue }} -->
+        <div class="w-1/2">
+
         </div>
     </div>
 </template>
