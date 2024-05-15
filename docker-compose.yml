@@ -9,8 +9,6 @@ services:
         container_name: my-laravel-app
         restart: unless-stopped
         working_dir: /var/www
-        depends_on:
-            -   my-mysql
         volumes:
             - ./:/var/www
             - ./.env:/var/www/.env
