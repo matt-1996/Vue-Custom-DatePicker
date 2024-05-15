@@ -7,6 +7,14 @@
 - Open Browser and hit localhost:8000/login
 - the Test username and password already presented in frontend
 
+if project did not run do below commands
+
+- sudo docker exec --user=root -it my-laravel-app sh
+- and run chmod -R 777 /var/www/storage
+- then run php artisan migrate --seed
+- then exit the container and run sudo docker exec --user=root -it my-laravel-node sh
+- then run npm run build
+
 ## also there's a bug which caused by jalali-moment js library that shows first day of month in Wrong day of the week
 
 ## my focus was on making custom date picker that's why the backend is a bit messy
