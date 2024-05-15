@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Event;
 
 use App\Enums\RoomPriceEnum;
 use App\Http\Controllers\Controller;
-use App\Models\Events;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Models\Room;
 
@@ -35,7 +35,7 @@ class EventController extends Controller
         $room = Room::find($id);
 
         foreach($request->days as $key => $day){
-            $event = Events::where('room_id' , $id)->where('date' , $request->days[$key])->first();
+            $event = Event::where('room_id' , $id)->where('date' , $request->days[$key])->first();
             if($event){
                 $event->check_in = $request->days[0];
                 $event->check_out = $request->days[count($request->days) -1];
@@ -44,7 +44,7 @@ class EventController extends Controller
                 $event->save();
             }else{
                 if($key == 0){
-                    Events::create([
+                    Event::create([
                         'room_id' => $id,
                         'check_in' => $request->days[0],
                         'check_out' => $request->days[count($request->days) -1],
@@ -54,7 +54,7 @@ class EventController extends Controller
                         'is_open' => 0
                     ]);
                 }
-            Events::create([
+            Event::create([
                 'room_id' => $id,
                 'date' => $request->days[$key],
                 'is_reserved' => 1,
@@ -73,13 +73,13 @@ class EventController extends Controller
     {
 
         if($request->id !== 0){
-            Events::find($request->id)
+            Event::find($request->id)
                 ->update([
                     'price' => $request->price,
                     'has_discount' => $request->has_discount ? 1 : 0
                 ]);
         }else{
-            Events::create([
+            Event::create([
                 'room_id' => $request->room_id,
                 'is_reserved' => 0,
                 'is_open' => 1,
