@@ -9,6 +9,10 @@
 
 ## also there's a bug which caused by jalali-moment js library that shows first day of month in Wrong day of the week
 
+## my focus was on making custom date picker that's why the backend is a bit messy
+
+## also for better understanding of my backend skills you can check out this repo [asan-card-task](https://github.com/matt-1996/asan-card-task)
+
 ![Jalali Date Picker](https://github.com/matt-1996/vue-custom-jalali-datePicker/blob/main/public/images/1.png?raw=true)
 
 ![Jalali Date Picker](https://github.com/matt-1996/vue-custom-jalali-datePicker/blob/main/public/images/2.png?raw=true)
