@@ -1,0 +1,77 @@
+[{
+    "title": "ویلا ساحلی",
+    "description": "ویلا ساحلی همراه فرنیش کامل واقع شده در نور مازندزان",
+    "user_id": 1,
+    "events": [
+        {
+            "room_id": 1,
+            "check_in": null,
+            "check_out": null,
+            "date": "1403/2/27",
+            "is_open": 0,
+            "is_reserved": 0,
+            "has_discount": 0,
+            "price": 2800
+        },
+        {
+            "room_id": 1,
+            "check_in": "1403/3/1",
+            "check_out": "1403/3/5",
+            "date": "1403/3/1",
+            "is_open": 0,
+            "is_reserved": 1,
+            "has_discount": 1,
+            "price": 2100
+        },
+        {
+            "room_id": 1,
+            "check_in": null,
+            "check_out": null,
+            "date": "1403/3/2",
+            "is_open": 0,
+            "is_reserved": 1,
+            "has_discount": 0,
+            "price": 2800
+        },
+        {
+            "room_id": 1,
+            "check_in": null,
+            "check_out": null,
+            "date": "1403/3/3",
+            "is_open": 0,
+            "is_reserved": 1,
+            "has_discount": 0,
+            "price": 2800
+        },
+        {
+            "room_id": 1,
+            "check_in": null,
+            "check_out": null,
+            "date": "1403/3/4",
+            "is_open": 0,
+            "is_reserved": 1,
+            "has_discount": 0,
+            "price": 2800
+        },
+        {
+            "room_id": 1,
+            "check_in": null,
+            "check_out": null,
+            "date": "1403/3/5",
+            "is_open": 0,
+            "is_reserved": 1,
+            "has_discount": 0,
+            "price": 2800
+        },
+        {
+            "room_id": 1,
+            "check_in": null,
+            "check_out": null,
+            "date": "1403/3/6",
+            "is_open": 1,
+            "is_reserved": 0,
+            "has_discount": 1,
+            "price": 2450
+        }
+    ]
+}]
