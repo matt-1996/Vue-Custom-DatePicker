@@ -2,6 +2,7 @@
 
 ### Instalation
 - Clone The Project
+- cp .env.example .env
 - Run sudo docker-compose build --no-cache
 - sudo docker-compose up
 - Open Browser and hit localhost:8000/login
